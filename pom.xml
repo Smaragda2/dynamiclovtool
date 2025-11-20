@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.3.5</version>
+        <relativePath/>
+    </parent>
+
+	<groupId>gr.smaragda</groupId>
+	<artifactId>dynamiclovtool</artifactId>
+	<version>0.0.1</version>
+	<name>Dynamic Lov Tool</name>
+    <packaging>jar</packaging>
+	<description>Used to create the Json for Dynamic Lov Setup </description>
+
+    <url/>
+
+	<properties>
+		<java.version>21</java.version>
+        <app.mainClass>gr.smaragda.dynamiclovtool.DynamicLovToolApplication</app.mainClass>
+	</properties>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
+        <!-- Prime Faces -->
+        <dependency>
+            <groupId>jakarta.faces</groupId>
+            <artifactId>jakarta.faces-api</artifactId>
+            <version>4.0.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.primefaces</groupId>
+            <artifactId>primefaces</artifactId>
+            <version>12.0.0</version>
+            <classifier>jakarta</classifier>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.36</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- JSON Processing -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <!-- Test -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+	<build>
+		<plugins>
+            <!-- 1. Spring Boot fat JAR (executable jar) -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>${app.mainClass}</mainClass>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- 2. jpackage Maven plugin για Windows .exe -->
+            <plugin>
+                <groupId>org.panteleyev</groupId>
+                <artifactId>jpackage-maven-plugin</artifactId>
+                <version>1.6.0</version>
+
+                <configuration>
+                    <name>${project.artifactId}</name>
+
+                    <!-- input: ΜΟΝΟ το target -->
+                    <input>${project.build.directory}</input>
+
+                    <!-- jar name δυναμικά -->
+                    <mainJar>${project.build.finalName}.jar</mainJar>
+
+                    <mainClass>gr.smaragda.dynamiclovtool.DynamicLovToolApplication</mainClass>
+
+                    <!-- app-image για να μην χρειάζεται WiX -->
+                    <type>APP_IMAGE</type>
+                    <addModules>
+                        <module>java.se</module>
+                    </addModules>
+
+                    <!-- ΠΡΟΣΟΧΗ: ΕΔΩ ΕΚΤΟΣ target -->
+                    <destination>${project.basedir}/jpackage-output</destination>
+
+                    <winConsole>true</winConsole>
+                </configuration>
+
+                <executions>
+                    <execution>
+                        <id>create-windows-installer</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jpackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+	</build>
+
+</project>
