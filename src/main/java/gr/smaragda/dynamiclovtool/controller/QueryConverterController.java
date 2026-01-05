@@ -54,6 +54,7 @@ public class QueryConverterController {
         try {
             QueryAnalysis newAnalysis = converterTool.parseQuery(queryInput.getQuery());
             newAnalysis.setPanelTitle(queryInput.getPanelTitle());
+            newAnalysis.setSelectable(queryInput.isSelectable());
 
             // Αποθήκευση analysis στο session
             session.setAttribute("analysis", newAnalysis);
@@ -83,6 +84,7 @@ public class QueryConverterController {
 
     @PostMapping("generate-json")
     public String generateJson(@RequestParam String panelTitle,
+                               @RequestParam(defaultValue = "true") boolean selectable,
                                HttpSession session,
                                Model model) {
 
@@ -90,6 +92,8 @@ public class QueryConverterController {
             QueryAnalysis analysis = SessionUtil.getQueryAnalysisOrThrowException(session);
 
             analysis.setPanelTitle(panelTitle);
+            analysis.setSelectable(selectable);
+
             String jsonOutput = converterTool.generateJson(analysis);
 
             model.addAttribute("generatedJson", jsonOutput);

@@ -8,6 +8,7 @@ import java.util.List;
 @Data
 public class QueryAnalysis {
     private String panelTitle;
+    private boolean selectable = true; //Displays the arrow on each row to select the specific result
     private String originalQuery;
     private List<SearchField> searchFields = new ArrayList<>();
     private List<ResultColumn> resultColumns = new ArrayList<>();

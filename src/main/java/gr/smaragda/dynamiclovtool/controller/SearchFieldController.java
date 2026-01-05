@@ -42,6 +42,7 @@ public class SearchFieldController {
                 }
                 existingField.setRequired(updatedField.isRequired());
                 existingField.setHidden(updatedField.isHidden());
+                existingField.setDisabled(updatedField.isDisabled());
 
                 // Update validations - replace all
                 if (updatedField.getValidations() != null) {
@@ -53,6 +54,16 @@ public class SearchFieldController {
                 if (updatedField.getDropdownOptions() != null) {
                     existingField.getDropdownOptions().clear();
                     existingField.getDropdownOptions().addAll(updatedField.getDropdownOptions());
+                }
+
+                // Update checkbox field
+                if (updatedField.getCheckboxField() != null) {
+                    existingField.setCheckboxField(updatedField.getCheckboxField());
+                }
+
+                // Update defaultValueSetup
+                if (updatedField.getDefaultValueSetup() != null) {
+                    existingField.setDefaultValueSetup(updatedField.getDefaultValueSetup());
                 }
 
                 log.info("Updated field {} with {} validations and {} dropdown options",

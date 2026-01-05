@@ -105,31 +105,31 @@
                 <version>1.6.0</version>
 
                 <configuration>
+                    <!-- Όνομα app / installer -->
                     <name>${project.artifactId}</name>
 
-                    <!-- input: ΜΟΝΟ το target -->
+                    <!-- Φάκελος με το jar -->
                     <input>${project.build.directory}</input>
 
-                    <!-- jar name δυναμικά -->
+                    <!-- Dynamic jar name: artifactId-version.jar -->
                     <mainJar>${project.build.finalName}.jar</mainJar>
 
-                    <mainClass>gr.smaragda.dynamiclovtool.DynamicLovToolApplication</mainClass>
+                    <!-- main class -->
+                    <mainClass>${app.mainClass}</mainClass>
 
-                    <!-- app-image για να μην χρειάζεται WiX -->
+                    <!-- Μόνο Windows -->
                     <type>APP_IMAGE</type>
-                    <addModules>
-                        <module>java.se</module>
-                    </addModules>
+                    <winConsole>false</winConsole>
 
-                    <!-- ΠΡΟΣΟΧΗ: ΕΔΩ ΕΚΤΟΣ target -->
-                    <destination>${project.basedir}/jpackage-output</destination>
+                    <destination>${project.build.directory}/installer</destination>
 
-                    <winConsole>true</winConsole>
+                    <!-- <icon>src/main/resources/myicon.ico</icon> -->
                 </configuration>
 
                 <executions>
                     <execution>
                         <id>create-windows-installer</id>
+                        <!-- Να τρέχει μαζί με το "package" -->
                         <phase>package</phase>
                         <goals>
                             <goal>jpackage</goal>
@@ -137,7 +137,7 @@
                     </execution>
                 </executions>
             </plugin>
-        </plugins>
+		</plugins>
 	</build>
 
 </project>

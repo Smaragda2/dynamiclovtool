@@ -11,6 +11,7 @@ public enum SearchFieldType {
     INPUT("input"),
     DATE("date"),
     DROPDOWN("dropdown"),
+    CHECKBOX("checkbox"),
     LOV("lov");
 
     private final String type;

@@ -6,4 +6,5 @@ import lombok.Data;
 public class QueryInput {
     private String query;
     private String panelTitle = "sidepanel.title.X";
+    private boolean selectable = true;
 }

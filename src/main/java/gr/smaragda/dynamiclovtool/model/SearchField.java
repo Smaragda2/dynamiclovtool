@@ -27,9 +27,12 @@ public class SearchField {
 
     private boolean hidden = false;
     private boolean required = false;
+    private boolean disabled = false;
     private Map<String, SearchFieldValidation> validations = new LinkedHashMap<>();
     private String lovCode;
     private List<SearchFieldDropdownOption> dropdownOptions = new ArrayList<>();
+    private SearchFieldCheckbox checkboxField;
+    private SearchFieldDefaultValueSetup defaultValueSetup;
 
     // Constructors
     public SearchField(String dbParam, String title) {

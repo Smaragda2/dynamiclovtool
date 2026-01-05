@@ -429,6 +429,7 @@ public class OracleQueryToJsonTool {
         try {
             Map<String, Object> jsonMap = new LinkedHashMap<>();
             jsonMap.put("panelTitle", analysis.getPanelTitle());
+            jsonMap.put("isSelectable", analysis.isSelectable());
 
             // Search Fields
             Map<String, Object> searchFieldsMap = new LinkedHashMap<>();
@@ -438,6 +439,7 @@ public class OracleQueryToJsonTool {
                 fieldMap.put("type", field.getType().getType());
                 fieldMap.put("required", field.isRequired());
                 fieldMap.put("visible", !field.isHidden());
+                fieldMap.put("disabled", field.isDisabled());
 
                 // Validations
                 if (!field.getValidations().isEmpty()) {
@@ -468,6 +470,26 @@ public class OracleQueryToJsonTool {
                         optionsList.add(optionMap);
                     }
                     fieldMap.put("options", optionsList);
+                }
+
+                // Checkbox specific
+                if (field.getType() == SearchFieldType.CHECKBOX && field.getCheckboxField() != null) {
+                    Map<String, Object> checkboxMap = new LinkedHashMap<>();
+                    checkboxMap.put("checkedValue", field.getCheckboxField().getCheckedValue());
+                    checkboxMap.put("uncheckedValue", field.getCheckboxField().getUncheckedValue());
+                    checkboxMap.put("initialValue", field.getCheckboxField().getInitialValue());
+                    fieldMap.put("checkboxField", checkboxMap);
+                }
+
+                // Add defaultValueSetup if exists
+                if (field.getDefaultValueSetup() != null) {
+                    SearchFieldDefaultValueSetup setup = field.getDefaultValueSetup();
+                    Map<String, Object> setupMap = new LinkedHashMap<>();
+                    setupMap.put("defaultSource", setup.getDefaultSource());
+                    if (setup.getDefaultPath() != null && !setup.getDefaultPath().isEmpty()) {
+                        setupMap.put("defaultPath", setup.getDefaultPath());
+                    }
+                    fieldMap.put("defaultValueSetup", setupMap);
                 }
 
                 searchFieldsMap.put(field.getTitle(), fieldMap);

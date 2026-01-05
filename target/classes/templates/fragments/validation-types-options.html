@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="validationOptions">
+    <option value="" disabled="disabled">Select Type</option>
+    <option th:each="vtype : ${validationTypes}"
+            th:value="${vtype.type}"
+            th:data-helptext="${vtype.helpText}"
+            th:data-checkValue="${vtype.needsCheckValue}"
+            th:text="${vtype.label}"></option>
+</div>
+</body>
+</html>
