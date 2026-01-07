@@ -121,7 +121,8 @@
                     <type>APP_IMAGE</type>
                     <winConsole>false</winConsole>
 
-                    <destination>${project.build.directory}/installer</destination>
+                    <!-- <destination>${project.build.directory}/installer</destination> -->
+					<destination>${project.basedir}/installer</destination>
 
                     <!-- <icon>src/main/resources/myicon.ico</icon> -->
                 </configuration>
